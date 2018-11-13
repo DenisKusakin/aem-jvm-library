@@ -1,7 +1,7 @@
 package org.deniskusakin.aemlibrary
 
-import org.deniskusakin.aemlibrary.nodes.JcrNode
-import org.deniskusakin.aemlibrary.nodes.impl.JcrNodeImpl
+import org.deniskusakin.aemlibrary.jcr.JcrNode
+import org.deniskusakin.aemlibrary.jcr.impl.JcrNodeImpl
 import javax.jcr.Session
 
 class AemSessionImpl(private val jcrSession: Session) : AemSession {

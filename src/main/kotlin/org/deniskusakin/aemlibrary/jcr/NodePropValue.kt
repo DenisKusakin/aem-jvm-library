@@ -1,4 +1,4 @@
-package org.deniskusakin.aemlibrary.nodes
+package org.deniskusakin.aemlibrary.jcr
 
 sealed class NodePropValue
 

@@ -6,10 +6,10 @@ import org.junit.Test
 @Ignore
 class IntegrationTests {
     private val settings = ServerSettings(
-            url = "http://localhost:8080/server",
+            url = "http://localhost:4502/crx/server",
             login = "admin",
             password = "admin",
-            workspace = "default")
+            workspace = "crx.default")
 
     @Test
     fun propsTest() {

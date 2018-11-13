@@ -1,8 +1,8 @@
-package org.deniskusakin.aemlibrary.nodes.impl
+package org.deniskusakin.aemlibrary.jcr.impl
 
 import org.apache.jackrabbit.value.ValueFactoryImpl
-import org.deniskusakin.aemlibrary.nodes.NodeProp
-import org.deniskusakin.aemlibrary.nodes.NodeProps
+import org.deniskusakin.aemlibrary.jcr.NodeProp
+import org.deniskusakin.aemlibrary.jcr.NodeProps
 import javax.jcr.Node
 
 class NodePropsImpl(private val node: Node) : NodeProps {

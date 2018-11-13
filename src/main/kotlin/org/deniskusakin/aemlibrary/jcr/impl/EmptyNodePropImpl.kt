@@ -1,6 +1,6 @@
-package org.deniskusakin.aemlibrary.nodes.impl
+package org.deniskusakin.aemlibrary.jcr.impl
 
-import org.deniskusakin.aemlibrary.nodes.*
+import org.deniskusakin.aemlibrary.jcr.*
 import javax.jcr.Node
 
 class EmptyNodePropImpl(private val node: Node, private val propName: String) : NodeProp {

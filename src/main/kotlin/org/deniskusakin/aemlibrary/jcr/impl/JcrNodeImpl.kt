@@ -1,7 +1,7 @@
-package org.deniskusakin.aemlibrary.nodes.impl
+package org.deniskusakin.aemlibrary.jcr.impl
 
-import org.deniskusakin.aemlibrary.nodes.JcrNode
-import org.deniskusakin.aemlibrary.nodes.NodeProps
+import org.deniskusakin.aemlibrary.jcr.JcrNode
+import org.deniskusakin.aemlibrary.jcr.NodeProps
 import javax.jcr.Node
 
 class JcrNodeImpl(private val node: Node) : JcrNode {
