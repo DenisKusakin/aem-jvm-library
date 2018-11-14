@@ -9,7 +9,7 @@ import javax.jcr.SimpleCredentials
 
 fun openConnection(settings: ServerSettings): AemSession {
     val params = HashMap<String, Any>()
-    params[Spi2davexRepositoryServiceFactory.PARAM_REPOSITORY_URI] = settings.url
+    params[Spi2davexRepositoryServiceFactory.PARAM_REPOSITORY_URI] = "${settings.url}/${settings.webDavPath}"
     params[Jcr2spiRepositoryFactory.PARAM_REPOSITORY_SERVICE_FACTORY] =
             Spi2davexRepositoryServiceFactory::class.java.name
     params[Jcr2spiRepositoryFactory.PARAM_ITEM_CACHE_SIZE] = 128

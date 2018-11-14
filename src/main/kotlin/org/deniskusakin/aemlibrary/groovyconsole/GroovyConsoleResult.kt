@@ -5,5 +5,5 @@ package org.deniskusakin.aemlibrary.groovyconsole
  */
 sealed class GroovyConsoleResult
 
-data class GroovyConsoleSuccessResult(val result: String, val output: String, val runningTime: String)
-data class GroovyConsoleErrorResult(val exceptionStackTrace: String)
+data class GroovyConsoleSuccessResult(val result: String, val output: String, val runningTime: String) : GroovyConsoleResult()
+data class GroovyConsoleErrorResult(val exceptionStackTrace: String) : GroovyConsoleResult()
