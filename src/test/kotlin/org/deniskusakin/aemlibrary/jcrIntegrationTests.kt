@@ -10,14 +10,15 @@ import org.junit.Test
 @Ignore
 class IntegrationTests {
     private val settings = ServerSettings(
-            url = "http://localhost:8080",
+            url = "http://localhost:4502",
+//            url = "http://localhost:8080",
 //            url = "http://eprupetw1009.petersburg.epam.com:4502",
-//            webDavPath = "crx/server",
-            webDavPath = "server",
+            webDavPath = "crx/server",
+//            webDavPath = "server",
             login = "admin",
             password = "admin",
-            workspace = "default"
-//            workspace = "crx.default"
+//            workspace = "default"
+            workspace = "crx.default"
     )
 
     @Test
@@ -77,7 +78,7 @@ class IntegrationTests {
     fun bundlesTest() {
         val bundlesService = BundlesServiceImpl(settings)
         bundlesService.bundles().asCollection()
-                //.filter { it.name.contains("toryburch") }
+//                .filter { it.name.contains("toryburch") }
                 //.forEach { it.start() }
                 .filter { it.state != BundleState.ACTIVE }
                 .forEach { System.out.println("${it.id}: ${it.symbolicName} -> ${it.state}") }
