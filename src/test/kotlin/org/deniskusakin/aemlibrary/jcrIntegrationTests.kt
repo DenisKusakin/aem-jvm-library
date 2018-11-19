@@ -1,23 +1,32 @@
 package org.deniskusakin.aemlibrary
 
 import org.deniskusakin.aemlibrary.groovyconsole.impl.GroovyConsoleServiceImpl
+import org.deniskusakin.aemlibrary.osgi.BundleState
+import org.deniskusakin.aemlibrary.osgi.impl.BundlesServiceImpl
+import org.deniskusakin.aemlibrary.sling.impl.InfoServiceImpl
 import org.junit.Ignore
 import org.junit.Test
 
 @Ignore
 class IntegrationTests {
     private val settings = ServerSettings(
-//            url = "http://localhost:8080",
-            url = "http://eprupetw1009.petersburg.epam.com:4502",
+            url = "http://localhost:8080",
+//            url = "http://eprupetw1009.petersburg.epam.com:4502",
+//            webDavPath = "crx/server",
             webDavPath = "server",
             login = "admin",
             password = "admin",
-            workspace = "default")
+            workspace = "default"
+//            workspace = "crx.default"
+    )
 
     @Test
     fun propsTest() {
         val session = openConnection(settings)
-        session.node("/content").props.list().forEach { System.out.println(it) }
+        session
+                .node("/etc/react-clientlibs/nashorn-polyfill.js/jcr:content")
+                .props.list()
+                .forEach { System.out.println(it) }
     }
 
     @Test
@@ -40,6 +49,37 @@ class IntegrationTests {
     @Test
     fun groovyTest() {
         val gc = GroovyConsoleServiceImpl(settings)
-        System.out.println(gc.exec("return 1"))
+        val script = """
+            class Test {
+                def a;
+                Integer b;
+            }
+            def test = new Test()
+            test.a = "Hello"
+            test.b = 1;
+            def json = JsonOutput.toJson(test)
+            return json
+        """.trimIndent()
+
+        //System.out.print(gc.exec(script))
+        System.out.print(gc.exec(script).to(TestG::class.java).a)
+    }
+
+    @Test
+    fun runModesTest() {
+        val infoService = InfoServiceImpl(settings)
+        System.out.print(infoService.runModes().asStrings())
+    }
+
+    data class TestG(val a: String, val b: Int)
+
+    @Test
+    fun bundlesTest() {
+        val bundlesService = BundlesServiceImpl(settings)
+        bundlesService.bundles().asCollection()
+                //.filter { it.name.contains("toryburch") }
+                //.forEach { it.start() }
+                .filter { it.state != BundleState.ACTIVE }
+                .forEach { System.out.println("${it.id}: ${it.symbolicName} -> ${it.state}") }
     }
 }

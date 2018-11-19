@@ -1,14 +1,20 @@
 package org.deniskusakin.aemlibrary.jcr
 
+import java.util.*
+
 sealed class NodePropValue
 
 data class StringValue(val value: String) : NodePropValue()
 data class BooleanValue(val value: Boolean) : NodePropValue()
 data class LongValue(val value: Long) : NodePropValue()
+data class DateValue(val value: Calendar) : NodePropValue()
+//data class BinaryValue(val value: )
 
-data class StringMultipleValue(val value: List<String>) : NodePropValue()
-data class BooleanMultipleValue(val value: List<Boolean>) : NodePropValue()
-data class LongMultipleValue(val value: List<Long>) : NodePropValue()
+data class MultipleValue<out T : NodePropValue>(val value: List<T>) : NodePropValue()
+//data class StringMultipleValue(val value: List<String>) : NodePropValue()
+//data class BooleanMultipleValue(val value: List<Boolean>) : NodePropValue()
+//data class LongMultipleValue(val value: List<Long>) : NodePropValue()
+//data class DateMultipleValue(val value: List<Calendar>) : NodePropValue()
 
 object EmptyValue : NodePropValue() {
     override fun toString(): String {

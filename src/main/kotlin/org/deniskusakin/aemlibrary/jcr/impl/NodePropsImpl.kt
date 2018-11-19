@@ -3,6 +3,7 @@ package org.deniskusakin.aemlibrary.jcr.impl
 import org.apache.jackrabbit.value.ValueFactoryImpl
 import org.deniskusakin.aemlibrary.jcr.NodeProp
 import org.deniskusakin.aemlibrary.jcr.NodeProps
+import java.util.*
 import javax.jcr.Node
 
 class NodePropsImpl(private val node: Node) : NodeProps {
@@ -25,6 +26,10 @@ class NodePropsImpl(private val node: Node) : NodeProps {
         node.setProperty(name, value)
     }
 
+    override fun set(name: String, value: Calendar) {
+        node.setProperty(name, value)
+    }
+
     override fun <T> set(name: String, value: List<T>) {
         val valueFactory = ValueFactoryImpl.getInstance()
         val array = value.map {
@@ -32,6 +37,7 @@ class NodePropsImpl(private val node: Node) : NodeProps {
                 is String -> valueFactory.createValue(it)
                 is Boolean -> valueFactory.createValue(it)
                 is Long -> valueFactory.createValue(it)
+                is Calendar -> valueFactory.createValue(it)
                 else -> throw Exception("Unsupported value class")
             }
         }.toTypedArray()

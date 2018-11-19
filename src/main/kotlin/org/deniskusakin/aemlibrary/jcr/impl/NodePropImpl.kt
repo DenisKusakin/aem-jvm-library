@@ -7,13 +7,14 @@ import javax.jcr.PropertyType
 class NodePropImpl(private val property: Property) : NodeProp {
     override val name: String
         get() = property.name
-    override var value: NodePropValue
+    override val value: NodePropValue
         get() {
             if (property.isMultiple) {
                 return when (property.type) {
-                    PropertyType.STRING -> StringMultipleValue(property.values.map { it.string })
-                    PropertyType.BOOLEAN -> BooleanMultipleValue(property.values.map { it.boolean })
-                    PropertyType.LONG -> LongMultipleValue(property.values.map { it.long })
+                    PropertyType.STRING -> MultipleValue(property.values.map { StringValue(it.string) })
+                    PropertyType.BOOLEAN -> MultipleValue(property.values.map { BooleanValue(it.boolean) })
+                    PropertyType.LONG -> MultipleValue(property.values.map { LongValue(it.long) })
+                    PropertyType.DATE -> MultipleValue(property.values.map { DateValue(it.date) })
                     else -> EmptyValue
                 }
             }
@@ -22,14 +23,8 @@ class NodePropImpl(private val property: Property) : NodeProp {
                 PropertyType.STRING -> StringValue(property.value.string)
                 PropertyType.BOOLEAN -> BooleanValue(property.value.boolean)
                 PropertyType.LONG -> LongValue(property.value.long)
+                PropertyType.DATE -> DateValue(property.value.date)
                 else -> EmptyValue
-            }
-        }
-        set(value) {
-            when (value) {
-                is StringValue -> property.setValue(value.value)
-                is BooleanValue -> property.setValue(value.value)
-                is LongValue -> property.setValue(value.value)
             }
         }
 

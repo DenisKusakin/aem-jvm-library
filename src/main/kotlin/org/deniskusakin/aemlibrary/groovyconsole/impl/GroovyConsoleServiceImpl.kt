@@ -10,13 +10,13 @@ import org.deniskusakin.aemlibrary.groovyconsole.GroovyConsoleService
 import org.deniskusakin.aemlibrary.groovyconsole.GroovyConsoleSuccessResult
 
 class GroovyConsoleServiceImpl(private val serverSettings: ServerSettings) : GroovyConsoleService {
-    private val NETWORK_TIMEOUT = 10 * 60 * 1000
+    private val networkTimeout = 10 * 60 * 1000
 
     override fun exec(script: String): GroovyConsoleResult {
         val (_, response, result) = Fuel
                 .post("${serverSettings.url}/bin/groovyconsole/post.json", listOf(Pair("script", script)))
-                .timeout(NETWORK_TIMEOUT)
-                .timeoutRead(NETWORK_TIMEOUT)
+                .timeout(networkTimeout)
+                .timeoutRead(networkTimeout)
                 .authenticate(serverSettings.login, serverSettings.password)
                 .responseString()
 
@@ -36,9 +36,6 @@ class GroovyConsoleServiceImpl(private val serverSettings: ServerSettings) : Gro
                     GroovyConsoleErrorResult(exceptionStackTrace = output.exceptionStackTrace)
                 }
             }
-        }
-        Fuel.testMode {
-
         }
     }
 
