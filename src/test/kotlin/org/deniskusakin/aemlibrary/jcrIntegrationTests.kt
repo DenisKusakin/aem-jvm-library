@@ -12,7 +12,6 @@ class IntegrationTests {
     private val settings = ServerSettings(
             url = "http://localhost:4502",
 //            url = "http://localhost:8080",
-//            url = "http://eprupetw1009.petersburg.epam.com:4502",
             webDavPath = "crx/server",
 //            webDavPath = "server",
             login = "admin",
