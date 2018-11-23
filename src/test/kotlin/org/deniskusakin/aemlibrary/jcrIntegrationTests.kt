@@ -1,6 +1,9 @@
 package org.deniskusakin.aemlibrary
 
+import org.apache.commons.io.IOUtils
 import org.deniskusakin.aemlibrary.groovyconsole.impl.GroovyConsoleServiceImpl
+import org.deniskusakin.aemlibrary.jcr.BinaryPropValue
+import org.deniskusakin.aemlibrary.jcr.asString
 import org.deniskusakin.aemlibrary.osgi.BundleState
 import org.deniskusakin.aemlibrary.osgi.impl.BundlesServiceImpl
 import org.deniskusakin.aemlibrary.sling.impl.InfoServiceImpl
@@ -32,7 +35,7 @@ class IntegrationTests {
     @Test
     fun setPropertyTest() {
         val session = openConnection(settings)
-        session.node("/content").props["testMultipleProp"] = listOf<Long>(1, 2, 3)
+        session.node("/content").props["testMultipleProp"] = listOf(1L, 2L, 3L)
         session.commit()
     }
 
@@ -74,12 +77,21 @@ class IntegrationTests {
     data class TestG(val a: String, val b: Int)
 
     @Test
+    fun testBinaryProp() {
+        val session = openConnection(settings)
+        val prop = session
+                .node("/libs/clientlibs/ckeditor/resources/ckeditor/config.js/jcr:content")
+                .props["jcr:data"]
+        System.out.println(prop.asString())
+    }
+
+    @Test
     fun bundlesTest() {
         val bundlesService = BundlesServiceImpl(settings)
         bundlesService.bundles().asCollection()
-//                .filter { it.name.contains("toryburch") }
                 //.forEach { it.start() }
-                .filter { it.state != BundleState.ACTIVE }
+//                .filter { it.state != BundleState.ACTIVE }
+//                .forEach { it.start() }
                 .forEach { System.out.println("${it.id}: ${it.symbolicName} -> ${it.state}") }
     }
 }

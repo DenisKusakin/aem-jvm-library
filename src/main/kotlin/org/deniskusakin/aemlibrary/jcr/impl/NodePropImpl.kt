@@ -1,6 +1,7 @@
 package org.deniskusakin.aemlibrary.jcr.impl
 
 import org.deniskusakin.aemlibrary.jcr.*
+import java.util.*
 import javax.jcr.Property
 import javax.jcr.PropertyType
 
@@ -24,6 +25,7 @@ class NodePropImpl(private val property: Property) : NodeProp {
                 PropertyType.BOOLEAN -> BooleanValue(property.value.boolean)
                 PropertyType.LONG -> LongValue(property.value.long)
                 PropertyType.DATE -> DateValue(property.value.date)
+                PropertyType.BINARY -> BinaryPropValue(property.value.binary)
                 else -> EmptyValue
             }
         }
